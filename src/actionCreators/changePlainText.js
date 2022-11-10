@@ -1,4 +1,5 @@
 export default function changePlainText(plainText) {
+  console.log(plainText);
   if (plainText !== " ") {
     return { type: "CHANGE_PLAINTEXT", payload: plainText };
   } else {
