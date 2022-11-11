@@ -1,8 +1,17 @@
 import React from "react";
 
-const EncryptButton = () => {
+const EncryptButton = ({ setDecryptBool, DecryptBool }) => {
   return (
-    <button className="text-white text-4xl absolute right-0 top-1/2 ">
+    <button
+      className={
+        DecryptBool
+          ? "text-yellow text-4xl absolute right-0 top-1/2 "
+          : "text-white text-4xl absolute right-0 top-1/2 "
+      }
+      onClick={() => {
+        setDecryptBool(true);
+      }}
+    >
       Encrypt
     </button>
   );
