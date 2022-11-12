@@ -81,6 +81,84 @@ function changeWordToMorse(letter, morseArray) {
     case "z":
       morseArray.push("--.. ");
       break;
+    case "0":
+      morseArray.push("----- ");
+      break;
+    case "1":
+      morseArray.push(".---- ");
+      break;
+    case "2":
+      morseArray.push("..--- ");
+      break;
+    case "3":
+      morseArray.push("...-- ");
+      break;
+    case "4":
+      morseArray.push("....- ");
+      break;
+    case "5":
+      morseArray.push("..... ");
+      break;
+    case "6":
+      morseArray.push("-.... ");
+      break;
+    case "7":
+      morseArray.push("--... ");
+      break;
+    case "8":
+      morseArray.push("---.. ");
+      break;
+    case "9":
+      morseArray.push("----. ");
+      break;
+    case "&":
+      morseArray.push(".-... ");
+      break;
+    case "'":
+      morseArray.push(".----. ");
+      break;
+    case "@":
+      morseArray.push(".--.-. ");
+      break;
+    case ")":
+      morseArray.push("-.--.- ");
+      break;
+    case "(":
+      morseArray.push("-.--. ");
+      break;
+    case ":":
+      morseArray.push("---... ");
+      break;
+    case ",":
+      morseArray.push("--..-- ");
+      break;
+    case "=":
+      morseArray.push("-...- ");
+      break;
+    case "!":
+      morseArray.push("-.-.-- ");
+      break;
+    case ".":
+      morseArray.push(".-.-.- ");
+      break;
+    case "-":
+      morseArray.push("T ");
+      break;
+    case '%'||'0/0':
+      morseArray.push("----- -..-. ----- ");
+      break;
+    case "+":
+      morseArray.push(".-.-. ");
+      break;
+    case '"':
+      morseArray.push(".-..-. ");
+      break;
+    case "?":
+      morseArray.push("..--.. ");
+      break;
+    case "/":
+      morseArray.push("-..-. ");
+      break;
     default:
       break;
   }
