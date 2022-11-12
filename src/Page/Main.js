@@ -1,32 +1,28 @@
-import { useState } from "react";
-import DecryptButton from "../Components/DecryptButton";
-import EncryptButton from "../Components/EncryptButton";
-import MorseCodeForm from "../Components/MorseCodeForm";
-import MorseHeading from "../Components/MorseHeading";
-import PlainTextForm from "../Components/PlainTextForm";
+//import DecryptButton from "../Components/DecryptButton";
+//import EncryptButton from "../Components/EncryptButton";
+//import TopForm from "../Components/TopForm";
 
-import MorseCodeForm2 from "../Components/MorseCodeForm2";
-import PlainTextForm2 from "../Components/PlainTextForm2";
+import MorseHeading from "../Components/MorseHeading";
+//import PlainTextForm from "../Components/BottomForm";
+import { useSelector } from "react-redux";
+import CustomButton from "../Components/CustomButon";
+import CustomForm from "../Components/CustomForm";
 
 const Main = () => {
-  const [DecryptBool, setDecryptBool] = useState(false)
-  const [inputTextToMorse, setInputTextToMorse] = useState('')
-  console.log(DecryptBool)
+  const encOrDec = useSelector((state) => state.encOrDec);
+
+  //const [inputTextToMorse, setInputTextToMorse] = useState("");
+
   return (
     <div className="relative bg-foundationimage bg-center bg-no-repeat bg-cover h-full ">
       <MorseHeading headingText="Morse Code" />
-      {
-        DecryptBool ? <MorseCodeForm2 setInputTextToMorse={setInputTextToMorse} />:
-        <MorseCodeForm />
-      }
 
-      <DecryptButton setDecryptBool={setDecryptBool} DecryptBool={DecryptBool} />
-      <EncryptButton setDecryptBool={setDecryptBool} DecryptBool={DecryptBool} />
-      
-      {
-        DecryptBool ? <PlainTextForm2 inputTextToMorse={inputTextToMorse} />:
-        <PlainTextForm />
-      }
+      <CustomForm crypt={encOrDec} typeOfForm={"top"} />
+
+      <CustomButton crypt="Encrypt" />
+      <CustomButton crypt="Decrypt" />
+
+      <CustomForm crypt={encOrDec} typeOfForm={"bottom"} />
     </div>
   );
 };
