@@ -1,5 +1,11 @@
-const changeMorseToWord = (code, textArray, error) => {
-  switch (code) {
+const changeMorseToWord = (letter, textArray, error) => {
+  switch (letter) {
+    case "":
+      textArray.push("");
+      break;
+    case " ":
+      textArray.push("");
+      break;
     case ".-":
       textArray.push("a");
       break;
@@ -168,7 +174,7 @@ const changeMorseToWord = (code, textArray, error) => {
     default:
       //textArray.push(`Code '${code}' is undefined in Morse Code`);
 
-      error.push(`Code '${code}' is undefined in Morse Code`);
+      error.push(`Code '${letter}' is undefined in Morse Code`);
       console.log(error);
       break;
   }

@@ -1,21 +1,32 @@
 import { changeMorseToWord } from "./changeMorseToWord";
 
 const codeToText = (morseCode) => {
-  console.log(morseCode);
   let Array, textArray, stringOfText, error, valueToReturn;
-  //let morseCode = "--. --- --- -.. / -- --- .-. -. .. -. --.";
 
   // Checking for space
   // if " / " is there then add text "space"
-  morseCode = morseCode.trim();
-  let removeUnCharacterSlash = morseCode.replace(/(?: \/ )/g, "space");
+  //morseCode = morseCode.trim();
+
+  //let removeUnCharacterSlash = morseCode.replace(/(?: \/ )/g, "space ");
+  let removeUnCharacterSlash = morseCode;
+
+  for (let i = 0; i < morseCode.length; i++) {
+    removeUnCharacterSlash = removeUnCharacterSlash.replace(
+      /(?: \/ )/,
+      "space "
+    );
+  }
+
   // if " /" is there then add text " "
-  let removeUnCharacterSlash1 = removeUnCharacterSlash.replace(/(?: \/)/g, "");
+  let removeUnCharacterSlash1 = removeUnCharacterSlash.replace(/(?: \/)/g, " ");
   // if "/ " is there then add text " "
-  let removeUnCharacterSlash2 = removeUnCharacterSlash1.replace(/(?:\/ )/g, "");
-  let removeUnCharacterSlash3 = removeUnCharacterSlash2.replace(/(?:\/)/g, " ");
-  removeUnCharacterSlash3 = removeUnCharacterSlash3.trim();
-  console.log(removeUnCharacterSlash3);
+  let removeUnCharacterSlash2 = removeUnCharacterSlash1.replace(
+    /(?:\/ )/g,
+    " "
+  );
+
+  let removeUnCharacterSlash3 = removeUnCharacterSlash2.trim();
+
   Array = removeUnCharacterSlash3.split("space");
 
   textArray = [];
@@ -32,15 +43,12 @@ const codeToText = (morseCode) => {
     textArray.push(" ");
   });
 
-  console.log(textArray);
   // eslint-disable-next-line no-useless-escape
   stringOfText = textArray.toString().replace(/\,/g, "");
 
-  console.log(error);
   error.length === 0 ? (valueToReturn = stringOfText) : (valueToReturn = error);
-  console.log(valueToReturn);
+
   return valueToReturn;
-  //console.log(textArray.toString().replace(/\,/g, ""));
 };
 
 export default codeToText;
