@@ -1,22 +1,27 @@
 //import { useState } from "react";
 import { FaRegCopy } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import changeMorseCode from "../actionCreators/changeMorseCode";
 import changePlainText from "../actionCreators/changePlainText";
 import codeToText from "../Functions/MorseCodeToPlainText/codeToText";
+import textToCode from "../Functions/textToMorse/textToCode";
 
 const CustomForm = ({ crypt, typeOfForm }) => {
   //const [morseCode, setMorseCode] = useState("");
   const dispatch = useDispatch();
   const plainText = useSelector((state) => state.plainText);
+  const morseCode = useSelector((state) => state.morseCode);
 
   const getMorseCode = (e) => {
     //setMorseCode(e.target.value);
     let changedPlainText = codeToText(e.target.value);
-    console.log(changedPlainText);
+    //console.log(changedPlainText);
     dispatch(changePlainText(changedPlainText));
   };
   const getPlainText = (e) => {
     console.log(e.target.value);
+    let changedMorseCode = textToCode(e.target.value);
+    dispatch(changeMorseCode(changedMorseCode));
   };
 
   const copyToClipboard = () => {
@@ -50,7 +55,7 @@ const CustomForm = ({ crypt, typeOfForm }) => {
           crypt === "Encrypt"
             ? typeOfForm === "top"
               ? "Write your plain or english text "
-              : "Converted Morse Code"
+              : morseCode
             : typeOfForm === "top"
             ? "Write your Morse Code"
             : plainText

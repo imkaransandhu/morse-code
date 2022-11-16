@@ -19,8 +19,8 @@ const Main = () => {
 
       <CustomForm crypt={encOrDec} typeOfForm={"top"} />
 
-      <CustomButton crypt="Encrypt" />
-      <CustomButton crypt="Decrypt" />
+      <CustomButton btnType="Encrypt" crypt={encOrDec} />
+      <CustomButton btnType="Decrypt" crypt={encOrDec} />
 
       <CustomForm crypt={encOrDec} typeOfForm={"bottom"} />
     </div>

@@ -142,9 +142,9 @@ function changeWordToMorse(letter, morseArray) {
       morseArray.push(".-.-.- ");
       break;
     case "-":
-      morseArray.push("T ");
+      morseArray.push("-....- ");
       break;
-    case '%'||'0/0':
+    case "%":
       morseArray.push("----- -..-. ----- ");
       break;
     case "+":
@@ -163,4 +163,4 @@ function changeWordToMorse(letter, morseArray) {
       break;
   }
 }
-module.exports = changeWordToMorse
+module.exports = changeWordToMorse;
