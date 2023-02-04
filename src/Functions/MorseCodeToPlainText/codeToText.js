@@ -8,7 +8,10 @@ const codeToText = (morseCode) => {
   //morseCode = morseCode.trim();
 
   //let removeUnCharacterSlash = morseCode.replace(/(?: \/ )/g, "space ");
-  let removeUnCharacterSlash = morseCode;
+
+  let removeEmDashes = morseCode.replace(/\u2014/g, "--");
+  console.log(removeEmDashes);
+  let removeUnCharacterSlash = removeEmDashes;
 
   for (let i = 0; i < morseCode.length; i++) {
     removeUnCharacterSlash = removeUnCharacterSlash.replace(
