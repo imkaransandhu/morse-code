@@ -41,7 +41,7 @@ const CustomForm = ({ crypt, typeOfForm }) => {
           : "absolute left-0 right-0 bottom-0"
       } w-4/5 h-auto mx-auto`}
     >
-      <h1 className="absolute left-12 text-3xl text-black font-bold">
+      <h1 className="absolute left-0 right-0 text-center text-3xl text-purple-900 bg-black py-2 px-4 font-bold">
         {crypt === "Encrypt"
           ? typeOfForm === "top"
             ? "Plain Text"
@@ -60,14 +60,13 @@ const CustomForm = ({ crypt, typeOfForm }) => {
             ? "Write your Morse Code"
             : plainText
         }
-        className={`${typeOfForm} text-white text-2xl w-full h-1/5 py-12 px-8  bg-grey   placeholder:text-white`}
+        className={`${typeOfForm} text-white text-2xl w-full h-1/5 mt-4 py-12 px-8  bg-grey   placeholder:text-white`}
         onChange={crypt === "Encrypt" ? getPlainText : getMorseCode}
         disabled={typeOfForm === "bottom" && true}
       ></textarea>
-      <FaRegCopy
-        onClick={copyToClipboard}
-        className="absolute text-4xl cursor-pointer right-4 bottom-4"
-      />
+      <div className="absolute text-4xl cursor-pointer right-4 bottom-4">
+        <FaRegCopy onClick={copyToClipboard} className="cursor-pointer" />
+      </div>
     </form>
   );
 };

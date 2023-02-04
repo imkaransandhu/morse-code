@@ -10,7 +10,7 @@ module.exports = {
         yellow: "#facc15",
       },
       backgroundImage: {
-        foundationimage: "url('./../public/images/background.png')",
+        foundationimage: "url('./../public/images/morsecode-back-image.webp')",
       },
     },
   },

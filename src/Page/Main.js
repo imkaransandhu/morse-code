@@ -15,7 +15,7 @@ const Main = () => {
 
   return (
     <div className="relative bg-foundationimage bg-center bg-no-repeat bg-cover h-full ">
-      <MorseHeading headingText="Morse Code" />
+      <MorseHeading headingText="DashDot Beats" />
 
       <CustomForm crypt={encOrDec} typeOfForm={"top"} />
 

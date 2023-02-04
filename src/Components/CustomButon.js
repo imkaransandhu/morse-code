@@ -19,7 +19,8 @@ const CustomButton = ({ btnType, crypt }) => {
       onClick={changeEOrD}
       className={`${btnType !== crypt ? "text-white " : "text-yellow "} ${
         btnType === "Encrypt" ? " right-0" : "left-0"
-      } absolute text-4xl top-1/2`}
+      } absolute text-4xl top-1/2 bg-green-800 px-4 py-2 rounded-lg shadow-lg
+      `}
     >
       {btnType}
     </button>
