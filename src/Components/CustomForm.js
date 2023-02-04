@@ -62,6 +62,7 @@ const CustomForm = ({ crypt, typeOfForm }) => {
         }
         className={`${typeOfForm} text-white text-2xl w-full h-1/5 py-12 px-8  bg-grey   placeholder:text-white`}
         onChange={crypt === "Encrypt" ? getPlainText : getMorseCode}
+        keyboardType={"ascii-capable"}
         disabled={typeOfForm === "bottom" && true}
       ></textarea>
       <FaRegCopy
