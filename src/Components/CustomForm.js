@@ -92,7 +92,7 @@ const CustomForm = ({ crypt, typeOfForm }) => {
         typeOfForm === "top"
           ? "relative mt-5"
           : "absolute left-0 right-0 bottom-0"
-      } w-4/5 h-auto mx-auto`}
+      } sm:w-4/5 w-full h-auto mx-auto`}
     >
       <h1 className="absolute left-0 right-0 text-center text-3xl text-purple-900 bg-black py-2 px-4 font-bold">
         {crypt === "Encrypt"

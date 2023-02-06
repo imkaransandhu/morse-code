@@ -14,7 +14,7 @@ const Main = () => {
   //const [inputTextToMorse, setInputTextToMorse] = useState("");
 
   return (
-    <div className="relative bg-foundationimage bg-center bg-no-repeat bg-cover h-full ">
+    <div className=" flex  bg-center bg-no-repeat bg-cover h-full ">
       <MorseHeading headingText="DashDot Beats" />
 
       <CustomForm crypt={encOrDec} typeOfForm={"top"} />
