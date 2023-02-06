@@ -1,5 +1,5 @@
 export default function plainText(
-  state = "Plain text will be displayed Here",
+  state = "Write your plain or english text",
   action
 ) {
   switch (action.type) {

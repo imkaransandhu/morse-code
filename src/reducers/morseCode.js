@@ -1,5 +1,5 @@
 export default function morseCode(
-  state = "Morse Code text will be displayed Here",
+  state = ".-- .-. .. - . / -.-- --- ..- .-. / .--. .-.. .- .. -. / --- .-. / . -. --. .-.. .. ... .... / - . -..- - ",
   action
 ) {
   switch (action.type) {

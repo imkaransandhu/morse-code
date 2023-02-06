@@ -5,7 +5,8 @@ export default function changeMorseCode(morseCode) {
     console.log(morseCode);
     return {
       type: "CHANGE_MORSECODE_EMPTY",
-      payload: "Decrypted Text will be displayed here",
+      payload:
+        ".-- .-. .. - . / -.-- --- ..- .-. / .--. .-.. .- .. -. / --- .-. / . -. --. .-.. .. ... .... / - . -..- - ",
     };
   }
 }
