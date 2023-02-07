@@ -5,18 +5,21 @@ import changeMorseCode from "../actionCreators/changeMorseCode";
 import changePlainText from "../actionCreators/changePlainText";
 import codeToText from "../Functions/MorseCodeToPlainText/codeToText";
 import textToCode from "../Functions/textToMorse/textToCode";
-import { AiFillSound } from "react-icons/ai";
+import { AiFillSound, AiFillStop } from "react-icons/ai";
 //import { Tone, Synth, Transport } from "tone";
 //import { useEffect } from "react";
-import * as Tone from "tone";
-import { useState } from "react";
+//import * as Tone from "tone";
+import { useRef, Fragment, useState } from "react";
 
-const CustomForm = ({ crypt, typeOfForm }) => {
+const CustomForm = ({ crypt, typeOfForm, customClass }) => {
   //const [morseCode, setMorseCode] = useState("");
   const dispatch = useDispatch();
   const plainText = useSelector((state) => state.plainText);
   const morseCode = useSelector((state) => state.morseCode);
-  const [playMorseIsActive, setPlayMorseIsActive] = useState(true);
+  //const [playMorseIsActive, setPlayMorseIsActive] = useState(true);
+  const stopAudioBtn = useRef();
+  const [oscillator, setOscillator] = useState([]);
+  //const [stopAudio, setStopAudio] = useState(true);
 
   const getMorseCode = (e) => {
     //setMorseCode(e.target.value);
@@ -47,37 +50,104 @@ const CustomForm = ({ crypt, typeOfForm }) => {
   // //const frequency2 = 440;
   // const duration = 0.1;
 
-  const playMorse = (e) => {
+  const handlePlayMorse = (e) => {
     e.preventDefault();
-    console.log(playMorseIsActive);
-    if (!playMorseIsActive) {
-      console.error("please wait last audio is playing");
-    } else {
-      setPlayMorseIsActive(false);
-      const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-      let now = Tone.now();
 
-      for (const letter of morseCode) {
-        if (letter === "-") {
-          now += 0.2;
-          synth.triggerAttackRelease("E4", "10n", now);
-        } else if (letter === ".") {
-          now += 0.2;
-          synth.triggerAttackRelease("C4", "10n", now);
-        } else {
-          now += 0.4;
-          Tone.Transport.scheduleOnce(() => {
-            synth.triggerRelease();
-          }, now);
-        }
+    const context = new (window.AudioContext || window.webkitAudioContext)();
+    const dotDuration = 100; // duration of a dot in milliseconds
+    const dashDuration = dotDuration * 3;
+    const pauseDuration = dotDuration;
+
+    const codeArray = morseCode.split("");
+    let currentTime = 0;
+
+    const playSound = (duration, startTime) => {
+      const newOscillator = context.createOscillator();
+      newOscillator.frequency.value = 440;
+      newOscillator.connect(context.destination);
+      newOscillator.start(startTime / 1000);
+      newOscillator.stop((startTime + duration) / 1000);
+      setOscillator((preValues) => [...preValues, newOscillator]);
+    };
+
+    codeArray.forEach((c) => {
+      console.log(c);
+      switch (c) {
+        case ".":
+          playSound(dotDuration, currentTime);
+          currentTime += dotDuration + pauseDuration;
+          break;
+        case "-":
+          playSound(dashDuration, currentTime);
+          currentTime += dashDuration + pauseDuration;
+          break;
+        case " ":
+          currentTime += pauseDuration * 2;
+          break;
+        case "/":
+          currentTime += pauseDuration * 2;
+          break;
+        default:
+          console.error("Invalid Morse code character");
       }
-      let totalTime = morseCode.length * 2000;
-      setInterval(() => setPlayMorseIsActive(true), totalTime);
-    }
+    });
 
-    //synth.triggerRelease(releaseArray, now + 0.3);
+    // playMorse();
+    // let totalTime = morseCode.length * 2000;
+    // setInterval(() => setPlayMorseIsActive(true), totalTime);
   };
 
+  function stopMorseCode(e) {
+    e.preventDefault();
+    if (oscillator) {
+      console.log(oscillator);
+      oscillator.map((oscillation) => {
+        oscillation.stop();
+      });
+      setOscillator([]);
+    }
+  }
+
+  //synth.triggerRelease(releaseArray, now + 0.3);
+
+  // function playMorse() {
+  //   if (!playMorseIsActive) {
+  //     console.error("please wait last audio is playing");
+  //   } else {
+  //     setPlayMorseIsActive(false);
+  //     const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+  //     let now = Tone.now();
+  //     let releaseArray = [];
+  //     for (const letter of morseCode) {
+  //       if (letter === "-") {
+  //         now += 0.2;
+  //         releaseArray.push("E4");
+  //         synth.triggerAttack("E4", now);
+  //         //synth.stop();
+  //       } else if (letter === ".") {
+  //         now += 0.2;
+  //         synth.triggerAttack("C4", now);
+  //         //synth.stop();
+  //         releaseArray.push("C4");
+  //       } else {
+  //         now += 0.4;
+  //         //console.log(releaseArray);
+  //         console.log(synth);
+  //         synth.triggerRelease(releaseArray, now);
+  //         //releaseArray = [];
+  //         //Tone.Transport.stop();
+  //       }
+  //       console.log(releaseArray);
+  //       stopAudioBtn.current.addEventListener("click", (e) => {
+  //         e.preventDefault();
+  //         console.log(synth);
+  //         now += 0.4;
+  //         synth.triggerRelease(releaseArray, now);
+  //       });
+  //     }
+  //     // add event
+  //   }
+  // }
   // Plain text speak
 
   const playText = (e) => {
@@ -87,14 +157,8 @@ const CustomForm = ({ crypt, typeOfForm }) => {
   };
 
   return (
-    <form
-      className={`${
-        typeOfForm === "top"
-          ? "relative mt-5"
-          : "absolute left-0 right-0 bottom-0"
-      } w-4/5 h-auto mx-auto`}
-    >
-      <h1 className="absolute left-0 right-0 text-center text-3xl text-purple-900 bg-black py-2 px-4 font-bold">
+    <form className={` ${customClass} relative md:w-4/5 w-full h-auto mx-auto`}>
+      <h1 className=" text-center text-3xl text-white bg-black  py-2 px-4 font-bold">
         {crypt === "Encrypt"
           ? typeOfForm === "top"
             ? "Plain Text"
@@ -113,7 +177,7 @@ const CustomForm = ({ crypt, typeOfForm }) => {
             ? ""
             : plainText
         }
-        className={`${typeOfForm} text-white text-2xl w-full h-1/5 mt-4 py-12 px-8  bg-grey   placeholder:text-white`}
+        className={`${typeOfForm} text-white text-lg w-full md:h-96 h-60  p-4  bg-grey   placeholder:text-white`}
         onChange={crypt === "Encrypt" ? getPlainText : getMorseCode}
         disabled={typeOfForm === "bottom" && true}
       ></textarea>
@@ -122,14 +186,24 @@ const CustomForm = ({ crypt, typeOfForm }) => {
 
         {crypt === "Encrypt"
           ? typeOfForm === "bottom" && (
-              <button onClick={playMorse}>
-                <AiFillSound className="cursor-pointer" />
-              </button>
+              <Fragment>
+                <button onClick={stopMorseCode} ref={stopAudioBtn}>
+                  <AiFillStop className="cursor-pointer" />
+                </button>
+                <button onClick={handlePlayMorse}>
+                  <AiFillSound className="cursor-pointer" />
+                </button>
+              </Fragment>
             )
           : typeOfForm === "bottom" && (
-              <button onClick={playText}>
-                <AiFillSound className="cursor-pointer" />
-              </button>
+              <Fragment>
+                <button onClick={stopMorseCode} ref={stopAudioBtn}>
+                  <AiFillStop className="cursor-pointer" />
+                </button>
+                <button onClick={playText}>
+                  <AiFillSound className="cursor-pointer" />
+                </button>
+              </Fragment>
             )}
       </div>
     </form>
