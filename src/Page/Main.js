@@ -14,7 +14,7 @@ const Main = () => {
   //const [inputTextToMorse, setInputTextToMorse] = useState("");
 
   return (
-    <div className=" bg-gray-400  bg-center bg-no-repeat bg-cover h-full ">
+    <div className=" bg-gray-400  bg-center bg-no-repeat bg-cover min-h-screen ">
       <MorseHeading headingText="DashDot Beats" />
 
       <div className="flex md:flex-row flex-col py-8 md:gap-x-8 gap-y-4  ">

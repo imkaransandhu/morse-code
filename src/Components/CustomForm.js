@@ -9,7 +9,7 @@ import { AiFillSound, AiFillStop } from "react-icons/ai";
 //import { Tone, Synth, Transport } from "tone";
 //import { useEffect } from "react";
 //import * as Tone from "tone";
-import { useRef, Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 
 const CustomForm = ({ crypt, typeOfForm, customClass }) => {
   //const [morseCode, setMorseCode] = useState("");
@@ -17,7 +17,7 @@ const CustomForm = ({ crypt, typeOfForm, customClass }) => {
   const plainText = useSelector((state) => state.plainText);
   const morseCode = useSelector((state) => state.morseCode);
   //const [playMorseIsActive, setPlayMorseIsActive] = useState(true);
-  const stopAudioBtn = useRef();
+
   const [oscillator, setOscillator] = useState([]);
   //const [stopAudio, setStopAudio] = useState(true);
 
@@ -37,22 +37,18 @@ const CustomForm = ({ crypt, typeOfForm, customClass }) => {
     typeOfForm === "top"
       ? (formText = document.getElementsByClassName("top")[0].value)
       : (formText = document.getElementsByClassName("bottom")[0].placeholder);
-    console.log(formText);
+
     navigator.clipboard.writeText(formText);
   };
 
-  // playmorsecodesound
-  //let code = ".-- .-- .--";
-
-  // const dit = ".";
-  // const dah = "-";
-  // const frequency = 880;
-  // //const frequency2 = 440;
-  // const duration = 0.1;
-
   const handlePlayMorse = (e) => {
     e.preventDefault();
-
+    console.log(oscillator.length !== 0);
+    if (oscillator.length !== 0) {
+      console.log("k");
+      console.error("Audio is already playing");
+      return;
+    }
     const context = new (window.AudioContext || window.webkitAudioContext)();
     const dotDuration = 100; // duration of a dot in milliseconds
     const dashDuration = dotDuration * 3;
@@ -60,7 +56,6 @@ const CustomForm = ({ crypt, typeOfForm, customClass }) => {
 
     const codeArray = morseCode.split("");
     let currentTime = 0;
-
     const playSound = (duration, startTime) => {
       const newOscillator = context.createOscillator();
       newOscillator.frequency.value = 440;
@@ -71,7 +66,6 @@ const CustomForm = ({ crypt, typeOfForm, customClass }) => {
     };
 
     codeArray.forEach((c) => {
-      console.log(c);
       switch (c) {
         case ".":
           playSound(dotDuration, currentTime);
@@ -91,64 +85,21 @@ const CustomForm = ({ crypt, typeOfForm, customClass }) => {
           console.error("Invalid Morse code character");
       }
     });
-
-    // playMorse();
-    // let totalTime = morseCode.length * 2000;
-    // setInterval(() => setPlayMorseIsActive(true), totalTime);
+    console.log(currentTime);
+    setInterval(() => {
+      setOscillator([]);
+    }, currentTime);
   };
 
   function stopMorseCode(e) {
     e.preventDefault();
     if (oscillator) {
-      console.log(oscillator);
       oscillator.map((oscillation) => {
         oscillation.stop();
       });
       setOscillator([]);
     }
   }
-
-  //synth.triggerRelease(releaseArray, now + 0.3);
-
-  // function playMorse() {
-  //   if (!playMorseIsActive) {
-  //     console.error("please wait last audio is playing");
-  //   } else {
-  //     setPlayMorseIsActive(false);
-  //     const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-  //     let now = Tone.now();
-  //     let releaseArray = [];
-  //     for (const letter of morseCode) {
-  //       if (letter === "-") {
-  //         now += 0.2;
-  //         releaseArray.push("E4");
-  //         synth.triggerAttack("E4", now);
-  //         //synth.stop();
-  //       } else if (letter === ".") {
-  //         now += 0.2;
-  //         synth.triggerAttack("C4", now);
-  //         //synth.stop();
-  //         releaseArray.push("C4");
-  //       } else {
-  //         now += 0.4;
-  //         //console.log(releaseArray);
-  //         console.log(synth);
-  //         synth.triggerRelease(releaseArray, now);
-  //         //releaseArray = [];
-  //         //Tone.Transport.stop();
-  //       }
-  //       console.log(releaseArray);
-  //       stopAudioBtn.current.addEventListener("click", (e) => {
-  //         e.preventDefault();
-  //         console.log(synth);
-  //         now += 0.4;
-  //         synth.triggerRelease(releaseArray, now);
-  //       });
-  //     }
-  //     // add event
-  //   }
-  // }
-  // Plain text speak
 
   const playText = (e) => {
     e.preventDefault();
@@ -177,31 +128,34 @@ const CustomForm = ({ crypt, typeOfForm, customClass }) => {
             ? ""
             : plainText
         }
-        className={`${typeOfForm} text-white text-lg w-full md:h-96 h-60  p-4  bg-grey   placeholder:text-white`}
+        className={`${typeOfForm} text-white text-lg w-full md:h-96 h-36  p-4  bg-grey   placeholder:text-white border-0 rounded-none `}
         onChange={crypt === "Encrypt" ? getPlainText : getMorseCode}
         disabled={typeOfForm === "bottom" && true}
       ></textarea>
       <div className="absolute text-4xl cursor-pointer right-4 bottom-4 flex gap-x-4">
-        <FaRegCopy onClick={copyToClipboard} className="cursor-pointer" />
+        <FaRegCopy
+          onClick={copyToClipboard}
+          className="cursor-pointer hover:text-white"
+        />
 
         {crypt === "Encrypt"
           ? typeOfForm === "bottom" && (
               <Fragment>
-                <button onClick={stopMorseCode} ref={stopAudioBtn}>
-                  <AiFillStop className="cursor-pointer" />
+                <button onClick={stopMorseCode}>
+                  <AiFillStop className="cursor-pointer hover:text-white" />
                 </button>
                 <button onClick={handlePlayMorse}>
-                  <AiFillSound className="cursor-pointer" />
+                  <AiFillSound className="cursor-pointer hover:text-white" />
                 </button>
               </Fragment>
             )
           : typeOfForm === "bottom" && (
               <Fragment>
-                <button onClick={stopMorseCode} ref={stopAudioBtn}>
-                  <AiFillStop className="cursor-pointer" />
+                <button onClick={stopMorseCode}>
+                  <AiFillStop className="cursor-pointer hover:text-white" />
                 </button>
                 <button onClick={playText}>
-                  <AiFillSound className="cursor-pointer" />
+                  <AiFillSound className="cursor-pointer hover:text-white" />
                 </button>
               </Fragment>
             )}
