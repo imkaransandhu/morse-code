@@ -14,15 +14,23 @@ const Main = () => {
   //const [inputTextToMorse, setInputTextToMorse] = useState("");
 
   return (
-    <div className=" flex  bg-center bg-no-repeat bg-cover h-full ">
+    <div className=" bg-gray-400  bg-center bg-no-repeat bg-cover h-full ">
       <MorseHeading headingText="DashDot Beats" />
 
-      <CustomForm crypt={encOrDec} typeOfForm={"top"} />
+      <div className="flex md:flex-row flex-col py-8 md:gap-x-8 gap-y-4  ">
+        <CustomForm customClass="order-1" crypt={encOrDec} typeOfForm={"top"} />
 
-      <CustomButton btnType="Encrypt" crypt={encOrDec} />
-      <CustomButton btnType="Decrypt" crypt={encOrDec} />
+        <div className="flex md:flex-col md:gap-y-8 flex-row md:justify-center justify-between md:order-2 order-last">
+          <CustomButton btnType="Encrypt" crypt={encOrDec} />
+          <CustomButton btnType="Decrypt" crypt={encOrDec} />
+        </div>
 
-      <CustomForm crypt={encOrDec} typeOfForm={"bottom"} />
+        <CustomForm
+          customClass="order-3"
+          crypt={encOrDec}
+          typeOfForm={"bottom"}
+        />
+      </div>
     </div>
   );
 };
