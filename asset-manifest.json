@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/morse-code/static/css/main.290f3126.css",
-    "main.js": "/morse-code/static/js/main.968cee91.js",
+    "main.css": "/morse-code/static/css/main.925ee843.css",
+    "main.js": "/morse-code/static/js/main.0487c959.js",
     "index.html": "/morse-code/index.html",
-    "main.290f3126.css.map": "/morse-code/static/css/main.290f3126.css.map",
-    "main.968cee91.js.map": "/morse-code/static/js/main.968cee91.js.map"
+    "main.925ee843.css.map": "/morse-code/static/css/main.925ee843.css.map",
+    "main.0487c959.js.map": "/morse-code/static/js/main.0487c959.js.map"
   },
   "entrypoints": [
-    "static/css/main.290f3126.css",
-    "static/js/main.968cee91.js"
+    "static/css/main.925ee843.css",
+    "static/js/main.0487c959.js"
   ]
 }
